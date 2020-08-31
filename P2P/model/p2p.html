@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>P@P | Room</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    </head>
+    <style>
+    button, input{ border-radius: 5px; padding: 8px; background-color: rgba(0, 0, 0, 0); min-width:220px; max-width: 70%; border: 1px solid black;border-radius: 5px}
+    div{
+        margin: 18px;
+        border-radius: 5px;
+        border: 1px solid black;
+    }
+    </style>
+    <body style="font-family: monospace;">
+        <h4 style="overflow: hidden;" id="roomh1">P@P</h4>
+       <main>
+           <div id="mejoin" style=" min-width: 40%; max-width: 350px; font-size: 20px; padding: 14px">
+                <b>Join Session</b>
+            <center>
+                    <input type="text" id="mename" placeholder="name">
+                    <br>
+                    <button disabled onclick="joinSession(document.getElementById('mename').value)" class="btn white" style="color: black; margin: 16px" id="join">Join</button>
+            </center>
+           </div>
+           <div id="me" style=" min-width: 40%; max-width: 350px; font-size: 20px; padding: 14px">
+                <center>
+                        <button class="btn orange" type="submit" id="startCamera" onclick="startCamera();">
+                            Start Camera
+                        </button>
+                        <br>
+                </center>
+                <video style="width: 200px; height:auto;" id="mecamera" muted>
+                </video>
+           </div>
+           <div class="" style="min-width: 40%; max-width: 350px; font-size: 20px; padding: 8px">
+            <b>Sharable Link</b>
+            <table>
+                <tr>
+                    <td>(Password needed)</td><td><input disabled id="join_link"></td>
+                </tr>
+                <tr>
+                    <td>(No Password needed)</td><td><input disabled id="join_link_direct"></td>
+                </tr>
+            </table>
+            </div>
+       </main>
+    </body>
+</html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    var room_manifest = JSON.parse(`<_room_manifest_>`)
+    const roomh1 = document.getElementById("roomh1")
+    const join = document.getElementById('join')
+    const join_link = document.getElementById('join_link')
+    const join_link_direct = document.getElementById('join_link_direct')
+    const mejoin = document.getElementById('mejoin')
+    const startcamera = document.getElementById('startCamera');
+    const mecamera = document.getElementById('mecamera')
+    const me = document.getElementById('me')
+    roomh1.innerText = `P@P|${room_manifest.name}`
+    join_link.value = "https://"+location.host+"/room/"+room_manifest.join_link
+    join_link_direct.value = "https://"+location.host+"/room/"+room_manifest.join_link_direct
+
+</script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io('/');
+  socket.on("connected", (data)=>{
+    const int = setInterval(()=>{
+        console.log("alive")
+        socket.emit("alive", {})
+    }, 10000)
+  })
+  socket.on('disconnect', (data)=>{
+      alert('you are disconnected, click ok or reload the page')
+    location.reload()
+  })
+</script>
+
+<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+<script src="/peercli.js"></script>
