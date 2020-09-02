@@ -3,6 +3,10 @@ Group video Calling | WEBRTC Implementation
 
 # To get started
 
+Replace Variable `uri` in <server.js> with URI for your hosted MongoDB instance
+
+I am using MonogDB Cloud atlas its the quickest way to get started [Cloud Atlas Signup](https://www.mongodb.com/cloud/atlas/signup)
+
 Install npm modules:
 ```
 npm install
