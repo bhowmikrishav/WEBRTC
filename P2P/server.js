@@ -25,12 +25,12 @@ app.post("/room", (req,res)=>{
             var html = await fs.readFileSync("./model/room_made.html", 'utf8')
             
             if(req.cookies["room_admin"]!=undefined){
-                var room_link = JWT.verify(req.cookies["room_admin"], "MochinMonestery")
+                var room_link = JWT.verify(req.cookies["room_admin"], "")
                 var croom = await Room.getRoom(room_link.joined)
                 if(croom!=null){
                     console.log(31)
                     res.writeHead(200, { 'content-type': 'text/html' })
-                    res.end(html.replace(/\<_room_link_direct_\>/, JWT.sign({name:croom.name, roomer:croom.roomer, password:croom.password}, "MochinMonestery")))
+                    res.end(html.replace(/\<_room_link_direct_\>/, JWT.sign({name:croom.name, roomer:croom.roomer, password:croom.password}, "")))
                     return;
                 }
             }
@@ -49,7 +49,7 @@ app.post("/room", (req,res)=>{
 
 app.get("/room/\*", async (req, res)=>{
     try{
-        const token = JWT.verify( req.url.substring(6,req.url.length), "MochinMonestery")
+        const token = JWT.verify( req.url.substring(6,req.url.length), "")
         console.log(token)
         if(token.password != undefined){
             const room = await Room.getRoom(token.roomer)
@@ -77,7 +77,7 @@ io.on('connect', (socket)=>{
     socket.on('join', async (fields)=>{
         try{
             if(con_manif.joined){throw Error("again!")}
-            const token = JWT.verify(fields.jwt, "MochinMonestery")
+            const token = JWT.verify(fields.jwt, "")
             var con = await Room.joinRoom(fields.name, fields.pid, token.roomer, token.password)
             con_manif["roomer"] = con["roomer"]
             con_manif["pid"] = fields.pid
@@ -178,8 +178,8 @@ class Room{
         return { 
             roomer : room.roomer,
             name : room.name,
-            join_link : JWT.sign({name:room.name, roomer:room.roomer}, "MochinMonestery"),
-            join_link_direct : JWT.sign({name:room.name, roomer:room.roomer, password:room.password}, "MochinMonestery"),
+            join_link : JWT.sign({name:room.name, roomer:room.roomer}, ""),
+            join_link_direct : JWT.sign({name:room.name, roomer:room.roomer, password:room.password}, ""),
         }
     }
 
@@ -204,8 +204,8 @@ class Room{
                         resolve(
                             { 
                                 roomer : roomer,
-                                join_link : JWT.sign({name:name, roomer:roomer}, "MochinMonestery"),
-                                join_link_direct : JWT.sign({name:name, roomer:roomer, password:password}, "MochinMonestery"),
+                                join_link : JWT.sign({name:name, roomer:roomer}, ""),
+                                join_link_direct : JWT.sign({name:name, roomer:roomer, password:password}, ""),
                             }
                         )
                     }
