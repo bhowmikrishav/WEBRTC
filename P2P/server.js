@@ -135,7 +135,7 @@ io.on('connect', (socket)=>{
 })
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://qd1GpPPxWRRxRXgP:qd1GpPPxWRRxRXgP@cluster0-vqu1p.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const uri = "mongodb+srv://Host:Password@cluster0-vqu1p.mongodb.net/<dbname>?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: false });
 var rooms, connections;
 client.connect(err => {
