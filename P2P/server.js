@@ -6,6 +6,7 @@ var JWT = require('jsonwebtoken')
 var formidable = require('formidable');
 var cookieParser = require('cookie-parser');
 var formidable = require('formidable')
+
 app.use(cookieParser())
 app.use(require('express').static('public'))
 
