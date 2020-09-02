@@ -2,7 +2,7 @@ var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : 'werwerwer',
+  password : '',
   database : 'Peers',
   supportBigNumbers: true,
   bigNumberStrings: false,
