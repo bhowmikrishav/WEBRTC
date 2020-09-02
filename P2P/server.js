@@ -152,7 +152,7 @@ client.connect(err => {
 const SQL_CON_CONFIG = {
     host     : 'localhost',
     user     : 'root',
-    password : 'werwerwer',
+    password : '',
     database : 'Peers',
     supportBigNumbers: true,
     bigNumberStrings: true,
